@@ -1,3 +1,6 @@
+var mybutton = document.getElementById('onload'); 
+mybutton.onclick = loadAJAX; 
+
 function loadAJAX() {
 	var request = new XMLHttpRequest(); 
 	request.open('GET', 'data.json'); 
