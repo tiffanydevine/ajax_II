@@ -4,5 +4,5 @@ $.getJSON('data.json', function(data){
 		output += '<li>' + data[index].first_name + ' ' + data[index].last_name +'</li>';  
 	})
 	output += '</ul>'; 
-	$('#update').html(output); 
+	$('#update').append(output); 
 }); 
