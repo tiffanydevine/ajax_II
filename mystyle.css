@@ -1,6 +1,56 @@
-/* @override
-	http://iviewsource.com/JS_ajax_II/mystyle.css */
+#update h2 {
+	margin: 0;
+	padding-top: 10px;
+	font-family: Arial; 
+	font-weight: lighter;
+	border-bottom: 1px solid #333; 
+
+}
+
+#search-area {
+	margin: 0 auto;
+	text-align: center; 
+	background-color: black; 
+	padding: 10px; 
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#search-area label {
+	font-size: 1.5em; 
+	font-family: Arial; 
+	font-weight: bold;
+	color: #b30000;
+	padding-bottom: 5px; 
+}
+
+#search-area p {
+	font-size: 0.5em; 
+	font-weight: normal ;
+	color: white;
+	margin: 0;
+	padding-bottom: 5px; 
+}
+
+#search-area input {
+	padding-bottom: 5px; 
+}
+
+
+#update ul {
+    list-style: none;
+    margin: 0; 
+    padding: 0; 
+}
+
+#update li {
+	margin: 10px 0;
+	background-color: ; 
+	padding-bottom: 10ox; 
+}
+
 
 body {
-	background: #F0F8FF
+	background: #F0F8FF; 
 }
