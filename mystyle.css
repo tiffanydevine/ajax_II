@@ -3,7 +3,8 @@
 	padding-top: 10px;
 	font-family: Arial; 
 	font-weight: lighter;
-	border-bottom: 1px solid #333; 
+	border-bottom: 1px solid gray; 
+	text-align: center;
 
 }
 
@@ -48,8 +49,14 @@
 	margin: 10px 0;
 	background-color: ; 
 	padding-bottom: 10ox; 
+	text-align: center;
 }
 
+#update img {
+	display: block;
+	margin-left: auto; 
+	margin-right: auto; 
+}
 
 body {
 	background: #F0F8FF; 
