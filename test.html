@@ -3,14 +3,14 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Player Search</title>
-	<link rel="stylesheet" href="mystyle.css" />
+	<link rel="stylesheet" href="sliderstyle.css" />
 </head>
 <body>
 <div id="bf-input">
-	<label for=search>Find your blazer BF</lablel>
-	<p>Rate each of these categories from 1-10 with 10 being the most important</p>
+	<h1>Find your blazer BF</h1>
+	<p>Drag the slider to indicate how important each characteristic is in blzr BF</p>
 	<form>
-		<div>
+		<div class='sliders'>
 			<label for="generosity">Generosity</label>
 			<input id="generosity"type="range" min="0" max="100" step="10" list="steplist">
 				<datalist id="steplist">
@@ -28,7 +28,7 @@
 				</datalist>
 		</div>
 
-		<div>	
+		<div class='sliders'>	
 			<label for="honesty">Honesty</label>
 			<input id="honesty"type="range" min="0" max="100" step="10" list="steplist">
 				<datalist id="steplist">
@@ -46,7 +46,7 @@
 				</datalist>
 		</div>
 
-		<div>
+		<div class='sliders'>
 			<label for="ambition">Ambition</label>
 			<input id="ambition"type="range" min="0" max="100" step="10" list="steplist">
 				<datalist id="steplist">
@@ -64,7 +64,7 @@
 				</datalist>
 		</div>
 
-		<div>
+		<div class='sliders'>
 			<label for="reliability">Reliability</label>
 			<input id="reliability"type="range" min="0" max="100" step="10" list="steplist">
 				<datalist id="steplist">
@@ -82,7 +82,7 @@
 				</datalist>
 		</div>
 
-		<div>	
+		<div class='sliders'>	
 			<label for="bad boy">Bad Boy</label>
 			<input id="bad boy"type="range" min="0" max="100" step="10" list="steplist">
 				<datalist id="steplist">
