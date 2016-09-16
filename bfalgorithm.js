@@ -12,14 +12,10 @@ var ambition = $('#ambition').change(function(){
     var val = this.value;
 });
 
-var generosity = $('#generosity').change(function(){
-    var val = this.value;
-});
-
 var reliability = $('#reliability').change(function(){
     var val = this.value;
 });
 
-var generosity = $('#generosity').change(function(){
+var badBoy = $('#bad boy').change(function(){
     var val = this.value;
 });
