@@ -39,15 +39,26 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	var maxTA = Math.max.apply( null, arr ); 
 	var rangeTA = maxTA - minTA; 
 	var scoreTA = 0; 
-	var 
+	 
 	
 	var generosity = $('#generosity').change(function(){
     	var val = this.value;
     	scoreTA = (val/100);
-		console.log(scoreTA * rangeTA ); 
+    	var bfDistanceAssist = {}; 
+		var realscore = (scoreTA * rangeTA); 
+		$.each(teamAssist, function(key, value){
+			bfDistanceAssist[key] = Math.abs(realscore - value).toFixed(2); 
+		
+			// var tempArr = Object.keys(yourBf).map(function (key) {return yourBf[key];});
+			// var minimum = Math.min.apply( null, arr );
+		});
+		var valArray = Object.keys(bfDistanceAssist).map(function (key) {return Number(bfDistanceAssist[key]);});
+		var valMin = Math.min.apply( null, valArray );
+		var keyArray = Object.keys(bfDistanceAssist); 
+		console.log(keyArray[valArray.indexOf(valMin)]); 
 
-	});
-	
+		console.log(bfDistanceAssist); 
+	}); 
 
 }); 	  	
 	  	
