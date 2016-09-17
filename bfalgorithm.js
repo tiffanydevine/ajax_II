@@ -1,24 +1,3 @@
-// grab slider values 
-
-var generosity = $('#generosity').change(function(){
-    var val = this.value;
-});
-
-var honesty = $('#honesty').change(function(){
-    var val = this.value;
-});
-
-var ambition = $('#ambition').change(function(){
-    var val = this.value;
-});
-
-var reliability = $('#reliability').change(function(){
-    var val = this.value;
-});
-
-var badBoy = $('#bad boy').change(function(){
-    var val = this.value;
-});
 
 $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&TeamID=1610612757&VsConference=&VsDivision=', function (data) {
 	var teamAssist = {}; 
@@ -39,8 +18,8 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	var maxTA = Math.max.apply( null, arr ); 
 	var rangeTA = maxTA - minTA; 
 	var scoreTA = 0; 
-	 
 	
+
 	var generosity = $('#generosity').change(function(){
     	var val = this.value;
     	scoreTA = (val/100);
@@ -55,7 +34,10 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		var valArray = Object.keys(bfDistanceAssist).map(function (key) {return Number(bfDistanceAssist[key]);});
 		var valMin = Math.min.apply( null, valArray );
 		var keyArray = Object.keys(bfDistanceAssist); 
-		console.log(keyArray[valArray.indexOf(valMin)]); 
+		var player = keyArray[valArray.indexOf(valMin)]; 
+		 
+		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
+		$('#update').html(output); 
 
 		console.log(bfDistanceAssist); 
 	}); 
