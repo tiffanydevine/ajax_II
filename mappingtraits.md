@@ -1,10 +1,12 @@
 ## BF trait mapping 
 ### Please edit!
 
-generosity --> assists
-honesty --> ??
-ambition --> double doubles? triple doubles? 
-reliability --> free throw %
-bad boy --> steals
+generosity: assists
 
-*note remove trustworthy, same as honesty 
+honesty:
+
+ambition:double doubles, PIE
+
+reliability:ft%,turnovers(low=more reliable)
+
+bad boy:steals,blocks
