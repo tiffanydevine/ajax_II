@@ -1,6 +1,21 @@
+var button = document.getElementById('button');
+button.addEventListener('click', function() {
+    console.log('You clicked element # 0');
+    button.innerHTML = "!!!!!"; 
+    });
+
+Array.prototype.SumArray = function (arr) {
+    var sum = [];
+    if (arr != null && this.length == arr.length) {
+        for (var i = 0; i < arr.length; i++) {
+            sum.push(this[i] + arr[i]);
+        }
+    }
+    return sum;
+}; 
 
 $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&TeamID=1610612757&VsConference=&VsDivision=', function (data) {
-	var teamAssist = {}; 
+ 	var teamAssist = {}; 
 	var teamFgPercent = {}; 
 	var teamRebounds = {}; 
 	var teamSteals = {}; 
@@ -12,38 +27,78 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		teamSteals[value[2]] = value[22];
 		teamThreePercent[value[2]] = value[13];
 	 }); 
-
+	
 	var arr = Object.keys(teamAssist).map(function (key) {return teamAssist[key];});
 	var minTA = Math.min.apply( null, arr );
 	var maxTA = Math.max.apply( null, arr ); 
 	var rangeTA = maxTA - minTA; 
-	var scoreTA = 0; 
+	
+	// This array contains the sum of all distances 
+	var bfDistanceAssist = {}; 
+	var bfDistanceFGP = {}
+	var assistArray = []; 
+	var fgpArray = []; 
+	
+	var allDistanceSummed = assistArray.SumArray(fgpArray); 
 	
 
 	var generosity = $('#generosity').change(function(){
+    	var arr = Object.keys(teamAssist).map(function (key) {return teamAssist[key];});
+		var minTA = Math.min.apply( null, arr );
+		var maxTA = Math.max.apply( null, arr ); 
+		var rangeTA = maxTA - minTA; 
     	var val = this.value;
-    	scoreTA = (val/100);
-    	var bfDistanceAssist = {}; 
+    	var scoreTA = (val/100);
 		var realscore = (scoreTA * rangeTA); 
 		$.each(teamAssist, function(key, value){
 			bfDistanceAssist[key] = Math.abs(realscore - value).toFixed(2); 
-		
-			// var tempArr = Object.keys(yourBf).map(function (key) {return yourBf[key];});
-			// var minimum = Math.min.apply( null, arr );
 		});
-		var valArray = Object.keys(bfDistanceAssist).map(function (key) {return Number(bfDistanceAssist[key]);});
-		var valMin = Math.min.apply( null, valArray );
+		
+		assistArray = Object.keys(bfDistanceAssist).map(function (key) {return Number(bfDistanceAssist[key]);});
+		
+		
+		var valMin = Math.min.apply( null, assistArray );
 		var keyArray = Object.keys(bfDistanceAssist); 
-		var player = keyArray[valArray.indexOf(valMin)]; 
+		var player = keyArray[assistArray.indexOf(valMin)]; 
 		 
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
 		$('#update').html(output); 
-
+	
 		console.log(bfDistanceAssist); 
+		
 	}); 
+	
+	var honest = $('#honesty').change(function(){
+    	var arr = Object.keys(teamFgPercent).map(function (key) {return teamFgPercent[key];});
+		var minTA = Math.min.apply( null, arr );
+		var maxTA = Math.max.apply( null, arr ); 
+		var rangeTA = maxTA - minTA; 
+    	var val = this.value;
+    	var val = this.value;
+    	var scoreTA = (val/100);
+		var realscore = (scoreTA * rangeTA); 
+		$.each(teamFgPercent, function(key, value){
+			bfDistanceFGP[key] = Math.abs(realscore - value).toFixed(2); 
+		});
 
-}); 	  	
-	  	
+		fgpArray = Object.keys(bfDistanceFGP).map(function (key) {return Number(bfDistanceFGP[key]);});
+	
+		console.log('assists: ' + assistArray); 
+		console.log('FGP: ' + fgpArray); 
+		console.log('sum: ' + assistArray.SumArray(fgpArray)); 
+	
+	}); 
+	var button = document.getElementById('button');
+	button.addEventListener('click', function() {
+    	console.log(assistArray.SumArray(fgpArray));
+    	button.innerHTML = "!!!!!"; 
+    });
+
+}); 
+
+
+
+
 
 
 
