@@ -34,8 +34,8 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	var bfDistanceFGP = {}
 	var assistArray = []; 
 	var fgpArray = []; 
-	
-	var fgpFixed = {}
+	var fgpSlider = []; 
+	var assistSlider = []; 
 	
 	var allDistanceSummed = assistArray.SumArray(fgpArray); 
 	
@@ -47,20 +47,25 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		var rangeTA = maxTA - minTA; 
     	var val = this.value;
     	var scoreTA = (val/100);
-		var realscore = (scoreTA * rangeTA); 
+		var realscore = (scoreTA * rangeTA) + minTA; 
 		$.each(teamAssist, function(key, value){
 			bfDistanceAssist[key] = Math.abs(realscore - value).toFixed(2); 
 		});
 		
 		assistArray = Object.keys(bfDistanceAssist).map(function (key) {return Number(bfDistanceAssist[key]);});
-		
+		assistSlider = assistArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
+
+		console.log(assistSlider); 
+
+		/*
 		var valMin = Math.min.apply( null, assistArray );
 		var keyArray = Object.keys(bfDistanceAssist); 
 		var player = keyArray[assistArray.indexOf(valMin)]; 
 		 
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
 		$('#update').html(output); 	
-	
+		*/
+
 		//console.log('FGP FIXED: '+fgpFixed); 
 	}); 
 	
@@ -78,10 +83,9 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		});
 
 		fgpArray = Object.keys(bfDistanceFGP).map(function (key) {return Number(bfDistanceFGP[key]);});
-		fgpFixed = fgpArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
+		fgpSlider = fgpArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
 
-
-		console.log(fgpFixed); 
+		console.log(fgpSlider); 
 
 		
 	});
@@ -89,12 +93,13 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	
 	var button = document.getElementById('button');
 	button.addEventListener('click', function() {
-		var summed = assistArray.SumArray(fgpArray)
+		var summed = assistSlider.SumArray(fgpSlider)
+		console.log(summed); 
 		var valMin = Math.min.apply( null, summed );
 		var keyArray = Object.keys(bfDistanceAssist); 
 
 		var player = keyArray[summed.indexOf(valMin)]; 
-		
+		console.log('player '+player,'index ' + summed.indexOf(valMin) ); 
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
 		$('#update').html(output); 
 
