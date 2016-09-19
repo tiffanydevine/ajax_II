@@ -10,6 +10,29 @@ Array.prototype.SumArray = function (arr) {
     return sum;
 }; 
 
+
+function statRange (statObj) {
+	var arr Object.keys(statObj).map(function (key) {return statObj[key];});
+	var minVal = Math.min.apply( null, arr );
+	var maxVal = Math.max.apply( null, arr ); 
+	return maxVal - minVal;
+}; 
+
+function distanceArray (sliderVal, range, statObj) {
+	var arr Object.keys(statObj).map(function (key) {return statObj[key];});
+	var minVal = Math.min.apply( null, arr );
+	var scaledVal = (sliderVal/100); 
+	var socre = ((scaledVal * range) + minVal ); 
+	$.each(teamRebounds, function(key, value){
+		statObj[key] = Number(Math.abs(scaledVal - sliderVal).toFixed(2)); 
+	});
+	return Object.keys(statObj).map(function (key) {return Number(statObj[key]);});
+}; 
+
+function distanceScaleToSliderArray (distanceArray, range) {
+	return distanceArray.map(function (i) { return Number((i / range).toFixed(2))*100 });
+}; 
+
 $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&TeamID=1610612757&VsConference=&VsDivision=', function (data) {
  	var teamAssist = {}; 
 	var teamFgPercent = {}; 
@@ -34,13 +57,16 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	var bfDistanceFGP = {}
 	var assistArray = []; 
 	var fgpArray = []; 
-	var fgpSlider = []; 
-	var assistSlider = []; 
-	
+	var rebArray = []; 
+	var fgpSlider = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]; 
+	var assistSlider = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]; 
+	var rebSlider = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+
 	var allDistanceSummed = assistArray.SumArray(fgpArray); 
 	
 
 	var generosity = $('#generosity').change(function(){
+    	// this can be refactored into a function and called here. 
     	var arr = Object.keys(teamAssist).map(function (key) {return teamAssist[key];});
 		var minTA = Math.min.apply( null, arr );
 		var maxTA = Math.max.apply( null, arr ); 
@@ -86,10 +112,28 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		fgpSlider = fgpArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
 
 		console.log(fgpSlider); 
-
 		
 	});
  
+ 	var ambition = $('#ambition').change(function(){
+    	var arr = Object.keys(teamRebounds).map(function (key) {return teamRebounds[key];});
+		var minTA = Math.min.apply( null, arr );
+		var maxTA = Math.max.apply( null, arr ); 
+		var rangeTA = maxTA - minTA; 
+    	var val = this.value;
+    	var val = this.value;
+    	var scoreTA = (val/100);
+		var realscore = ((scoreTA * rangeTA) + minTA); 
+		$.each(teamRebounds, function(key, value){
+			bfDistanceFGP[key] = Math.abs(realscore - value).toFixed(2); 
+		});
+
+		fgpArray = Object.keys(bfDistanceFGP).map(function (key) {return Number(bfDistanceFGP[key]);});
+		fgpSlider = fgpArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
+
+		console.log(fgpSlider); 
+		
+	});
 	
 	var button = document.getElementById('button');
 	button.addEventListener('click', function() {
@@ -103,7 +147,7 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
 		$('#update').html(output); 
 
-    	
+
     });
 
 
