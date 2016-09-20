@@ -20,10 +20,34 @@
 	
 
 	function statRange (statObj) {
-		var arr Object.keys(statObj).map(function (key) {return statObj[key];});
-		return maxTA - minTA;
+		var arr = Object.keys(statObj).map(function (key) {return statObj[key];});
+		console.log('hello'); 
+		var minVal = Math.min.apply( null, arr );
+		var maxVal = Math.max.apply( null, arr ); 
+		return maxVal - minVal;
 	}; 
 
-	function distanceObject (sliderVal, range ) {
+	function distanceArray (sliderVal, range, statObj) {
+		var arr Object.keys(statObj).map(function (key) {return statObj[key];});
+		var minVal = Math.min.apply( null, arr );
+		var scaledVal = (sliderVal/100); 
+		var socre = ((scaledVal * range) + minVal ); 
+		$.each(teamRebounds, function(key, value){
+			statObj[key] = Number(Math.abs(scaledVal - sliderVal).toFixed(2)); 
+		});
+		return Object.keys(statObj).map(function (key) {return Number(statObj[key]);});
+	}; 
 
-	}
+	function distanceScaleToSliderArray (distanceArray, range) {
+		return distanceArray.map(function (i) { return Number((i / range).toFixed(2))*100 });
+	}; 
+
+
+
+	var ambition = $('#ambition').change(function(){
+		var range = statRange(teamSteals); 
+		//var distance = distanceArray (this.value, range, teamSteals); 
+		// defined outside 
+		//ambitionDistance = distanceScaleToSliderArray(distance, range); 
+
+
