@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Player Search</title>
+	<link rel="stylesheet" href="sliderstyle.css" />
+</head>
+<body>
+<div id="bf-input">
+	<h1>Find your blazer BF</h1>
+	<p>Drag the slider to indicate how important each characteristic is in blzr BF</p>
+	<form>
+		<div class='sliders'>
+			<label for="generosity">Generosity</label>
+			<input id="generosity"type="range" min="0" max="100" step="10" list="steplist">
+				<datalist id="steplist">
+				    <option>0</option>
+				    <option>10</option>
+				    <option>20</option>
+				    <option>30</option>
+				    <option>40</option>
+				    <option>50</option>
+				    <option>60</option>
+				    <option>70</option>
+				    <option>80</option>
+				    <option>90</option>
+				    <option>100</option>
+				</datalist>
+		</div>
+
+		<div class='sliders'>
+			<label for="intellegence">Intellegence</label>
+			<input id="intellegence"type="range" min="0" max="100" step="10" list="steplist">
+				<datalist id="steplist">
+				    <option>0</option>
+				    <option>10</option>
+				    <option>20</option>
+				    <option>30</option>
+				    <option>40</option>
+				    <option>50</option>
+				    <option>60</option>
+				    <option>70</option>
+				    <option>80</option>
+				    <option>90</option>
+				    <option>100</option>
+				</datalist>
+		</div>
+
+		<div class='sliders'>
+			<label for="protective">Protective</label>
+			<input id="protective"type="range" min="0" max="100" step="10" list="steplist">
+				<datalist id="steplist">
+				    <option>0</option>
+				    <option>10</option>
+				    <option>20</option>
+				    <option>30</option>
+				    <option>40</option>
+				    <option>50</option>
+				    <option>60</option>
+				    <option>70</option>
+				    <option>80</option>
+				    <option>90</option>
+				    <option>100</option>
+				</datalist>
+		</div>
+
+		<div class='sliders'>	
+			<label for="bad-boy">Bad Boy</label>
+			<input id="bad-boy"type="range" min="0" max="100" step="10" list="steplist">
+				<datalist id="steplist">
+				    <option>0</option>
+				    <option>10</option>
+				    <option>20</option>
+				    <option>30</option>
+				    <option>40</option>
+				    <option>50</option>
+				    <option>60</option>
+				    <option>70</option>
+				    <option>80</option>
+				    <option>90</option>
+				    <option>100</option>
+				</datalist>
+		<div>
+	</form>
+</div>
+<button type='button' id='button'>submit</button> 
+
+<div id="update"></div>
+
+<script src='jquery.js'></script>
+<script
+   type="text/javascript"
+   src="https://rawgit.com/tiffanydevine/JS_ajax_II/gh-pages/src/bfalgorithm.js"
+></script>
+<script src='bfalgorithm.js'></script>
+</body>
+</html>
