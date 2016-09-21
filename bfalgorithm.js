@@ -18,20 +18,15 @@ function statRange (statObj) {
 }; 
 
 function distanceArray (sliderVal, range, statObj, emptyArray) {
-	console.log(statObj); 
 	var arr =  Object.keys(statObj).map(function (key) {return statObj[key];});
 	var minVal = Math.min.apply( null, arr );
 	var scaledVal = (sliderVal/100); 
-	var socre = ((scaledVal * range) + minVal ); 
-	// fiX! 
-
-	$.each(emptyArray, function(key, value){
-		emptyArray[key] = Number(Math.abs(scaledVal - sliderVal).toFixed(2)); 
+	var score = ((scaledVal * range) + minVal ); 
+	emptyArray = []; 
+	$.each(statObj, function(key, value){
+		emptyArray.push(Number(Math.abs(score - value).toFixed(2))); 
 	});
-	console.log(statObj)
-	var arrTest = Object.keys(statObj).map(function (key) {return Number(statObj[key]);});
-	console.log(statObj); 
-	return arrTest
+	return emptyArray; 
 }; 
 
 function distanceScaleToSliderArray (distanceArray, range) {
@@ -39,113 +34,91 @@ function distanceScaleToSliderArray (distanceArray, range) {
 }; 
 
 
-
-
 $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&TeamID=1610612757&VsConference=&VsDivision=', function (data) {
- 	var teamAssist = {}; 
-	var teamFgPercent = {}; 
-	var teamRebounds = {}; 
-	var teamSteals = {}; 
-	var teamThreePercent = {}; 
+ 	var teamAssist = {};  // Assist
+	var teamFgPercent = {};  // FG percent 
+	var teamRebounds = {};  // Rebounds 
+	var teamSteals = {};  // Steals 
+	var teamBlocks = {};  // Blocks 
+	var teamPersonalFoul = {};  // Blocks 
+
+
 	$.each(data.resultSets[1].rowSet, function(index, value){
 		teamAssist[value[2]] = value[20];
 		teamFgPercent[value[2]] = value[10];
 		teamRebounds[value[2]] = value[19];
 		teamSteals[value[2]] = value[22];
-		teamThreePercent[value[2]] = value[13];
+		teamBlocks[value[2]] = value[23];
+		teamPersonalFoul[value[2]] = value[25];
+
+
 	 }); 
-	
+	/*
 	var arr = Object.keys(teamAssist).map(function (key) {return teamAssist[key];});
 	var minTA = Math.min.apply( null, arr );
 	var maxTA = Math.max.apply( null, arr ); 
 	var rangeTA = maxTA - minTA; 
-	
-	// This array contains the sum of all distances 
-	var bfDistanceAssist = {}; 
-	var bfDistanceFGP = {}
-	var assistArray = []; 
-	var fgpArray = [];  
-	var fgpSlider = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]; 
-	var assistSlider = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]; 
-	var rebSlider = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50];
+	*/
 
-	var allDistanceSummed = assistArray.SumArray(fgpArray); 
-	
+	var playerArray = Object.keys(teamAssist); 
+	// Arrays default at 50 across the board.  
+	var personalfoulSlider = []; 
+	var blocksSlider = []; 
+	var stealsSlider = []; 
+	var fgpSlider = []; 
+	var assistSlider = []; 
+	var rebSlider = [];
 
+	var generosityDistance = []; 
+	var badBoyDistance = []; 
+	var protectiveDistance =  []; 
+	var intellegenceDistance = []; 
+
+
+	//var allDistanceSummed = assistArray.SumArray(fgpArray); 
+	
+	// generosity slider (assists [20])
 	var generosity = $('#generosity').change(function(){
-    	// this can be refactored into a function and called here. 
-    	var arr = Object.keys(teamAssist).map(function (key) {return teamAssist[key];});
-		var minTA = Math.min.apply( null, arr );
-		var maxTA = Math.max.apply( null, arr ); 
-		var rangeTA = maxTA - minTA; 
-    	var val = this.value;
-    	var scoreTA = (val/100);
-		var realscore = (scoreTA * rangeTA) + minTA; 
-		$.each(teamAssist, function(key, value){
-			bfDistanceAssist[key] = Math.abs(realscore - value).toFixed(2); 
-		});
-		
-		assistArray = Object.keys(bfDistanceAssist).map(function (key) {return Number(bfDistanceAssist[key]);});
-		assistSlider = assistArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
+    	var range = statRange(teamAssist); 
+		var distance = distanceArray (this.value, range, teamAssist, assistSlider); 
+		generosityDistance = distanceScaleToSliderArray(distance, range); 
+		// console.log(ambitionDistance); 
 
-		console.log(assistSlider); 
-
-		/*
-		var valMin = Math.min.apply( null, assistArray );
-		var keyArray = Object.keys(bfDistanceAssist); 
-		var player = keyArray[assistArray.indexOf(valMin)]; 
-		 
-		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
-		$('#update').html(output); 	
-		*/
-
-		//console.log('FGP FIXED: '+fgpFixed); 
 	}); 
-	
-	var honest = $('#honesty').change(function(){
-    	var arr = Object.keys(teamFgPercent).map(function (key) {return teamFgPercent[key];});
-		var minTA = Math.min.apply( null, arr );
-		var maxTA = Math.max.apply( null, arr ); 
-		var rangeTA = maxTA - minTA; 
-    	var val = this.value;
-    	var val = this.value;
-    	var scoreTA = (val/100);
-		var realscore = ((scoreTA * rangeTA) + minTA); 
-		$.each(teamFgPercent, function(key, value){
-			bfDistanceFGP[key] = Math.abs(realscore - value).toFixed(2); 
-		});
 
-		fgpArray = Object.keys(bfDistanceFGP).map(function (key) {return Number(bfDistanceFGP[key]);});
-		fgpSlider = fgpArray.map(function (i) { return Number((i / rangeTA).toFixed(2))*100 });
+	// bad boy slider (PFs [])
+	var badBoy = $('#bad-boy').change(function(){	
+		var range = statRange(teamPersonalFoul); 
+		//console.log(teamPersonalFoul); 
+		var distance = distanceArray (this.value, range, teamPersonalFoul, personalfoulSlider); 
+		badBoyDistance = distanceScaleToSliderArray(distance, range); 
 
-		console.log(fgpSlider); 
-		
 	});
- 
- 	
 
-	var ambition = $('#ambition').change(function(){
+	// protective (blocks[23])
+	var protective = $('#protective').change(function(){	
+		var range = statRange(teamBlocks); 
+		var distance = distanceArray (this.value, range, teamBlocks, blocksSlider); 
+		protectiveDistance = distanceScaleToSliderArray(distance, range); 
+	}); 
+ 
+	
+ 	// intellegence (steals[22])
+	var intellegence = $('#intellegence').change(function(){
 		var range = statRange(teamSteals); 
-		console.log(range); 
 		var distance = distanceArray (this.value, range, teamSteals, rebSlider); 
-		// defined outside 
-		ambitionDistance = distanceScaleToSliderArray(distance, range); 
-		console.log(ambitionDistance); 
+		intellegenceDistance = distanceScaleToSliderArray(distance, range); 
 	});
 
 	
 	var button = document.getElementById('button');
 	button.addEventListener('click', function() {
-		var summed = assistSlider.SumArray(fgpSlider)
-		console.log(summed); 
+		var summed = protectiveDistance.SumArray(generosityDistance).SumArray(intellegenceDistance).SumArray(badBoyDistance); 
 		var valMin = Math.min.apply( null, summed );
-		var keyArray = Object.keys(bfDistanceAssist); 
-
-		var player = keyArray[summed.indexOf(valMin)]; 
-		console.log('player '+player,'index ' + summed.indexOf(valMin) ); 
+		var player = playerArray[summed.indexOf(valMin)]; 
+		console.log(player);
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
 		$('#update').html(output); 
-
 
     });
 
