@@ -23,5 +23,7 @@ intelligent: net rating? fg%?
 
 usage rating?
 
+funny? : 
+
 
 stat descriptions:http://stats.nba.com/help/glossary/
