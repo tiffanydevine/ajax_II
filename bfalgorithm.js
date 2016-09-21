@@ -24,8 +24,6 @@ function distanceArray (sliderVal, range, statObj, emptyArray) {
 	var score = ((scaledVal * range) + minVal ); 
 	emptyArray = []; 
 	$.each(statObj, function(key, value){
-		console.log(score); 
-		console.log(value); 
 		emptyArray.push(Number(Math.abs(score - value).toFixed(2))); 
 	});
 	return emptyArray; 
@@ -34,8 +32,6 @@ function distanceArray (sliderVal, range, statObj, emptyArray) {
 function distanceScaleToSliderArray (distanceArray, range) {
 	return distanceArray.map(function (i) { return Number((i / range).toFixed(2))*100 });
 }; 
-
-
 
 
 $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType=Regular+Season&TeamID=1610612757&VsConference=&VsDivision=', function (data) {
@@ -64,7 +60,7 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	var rangeTA = maxTA - minTA; 
 	*/
 
-	var playerArray = []; 
+	var playerArray = Object.keys(teamAssist); 
 	// Arrays default at 50 across the board.  
 	var personalfoulSlider = []; 
 	var blocksSlider = []; 
@@ -99,7 +95,6 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 
 	});
 
-
 	// protective (blocks[23])
 	var protective = $('#protective').change(function(){	
 		var range = statRange(teamBlocks); 
@@ -118,14 +113,10 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	
 	var button = document.getElementById('button');
 	button.addEventListener('click', function() {
-		console.log(generosityDistance, protectiveDistance, intellegenceDistance); 
-		var summed = protectiveDistance.SumArray(generosityDistance).SumArray(intellegenceDistance); 
-		console.log(summed); 
+		var summed = protectiveDistance.SumArray(generosityDistance).SumArray(intellegenceDistance).SumArray(badBoyDistance); 
 		var valMin = Math.min.apply( null, summed );
-		console.log(summed.indexOf(valMin)); 
-		// var keyArray = Object.keys(bfDistanceAssist); 
-		var player = keyArray[summed.indexOf(valMin)]; 
-		console.log('player '+player,'index ' + summed.indexOf(valMin) ); 
+		var player = playerArray[summed.indexOf(valMin)]; 
+		console.log(player);
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
 		$('#update').html(output); 
 
