@@ -9,7 +9,7 @@ ambition:double doubles, PIE
 
 reliability/trustworthy:ft%,turnovers(low=more reliable)
 
-bad boy:steals,blocks, personal fouls
+troublemaker:steals,blocks, personal fouls
 
 09.18.16 new ideas:
 
