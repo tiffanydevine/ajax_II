@@ -96,10 +96,8 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		//console.log(teamPersonalFoul); 
 		var distance = distanceArray (this.value, range, teamPersonalFoul, personalfoulSlider); 
 		badBoyDistance = distanceScaleToSliderArray(distance, range); 
-		console.log(ambitionDistance); 
 
 	});
-
 
 
 	// protective (blocks[23])
@@ -109,7 +107,7 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 		protectiveDistance = distanceScaleToSliderArray(distance, range); 
 	}); 
  
- 	
+	
  	// intellegence (steals[22])
 	var intellegence = $('#intellegence').change(function(){
 		var range = statRange(teamSteals); 
@@ -120,11 +118,12 @@ $.getJSON('http://stats.nba.com/stats/teamplayerdashboard?DateFrom=&DateTo=&Game
 	
 	var button = document.getElementById('button');
 	button.addEventListener('click', function() {
-		var summed = assistSlider.SumArray(fgpSlider)
+		console.log(generosityDistance, protectiveDistance, intellegenceDistance); 
+		var summed = protectiveDistance.SumArray(generosityDistance).SumArray(intellegenceDistance); 
 		console.log(summed); 
 		var valMin = Math.min.apply( null, summed );
-		var keyArray = Object.keys(bfDistanceAssist); 
-
+		console.log(summed.indexOf(valMin)); 
+		// var keyArray = Object.keys(bfDistanceAssist); 
 		var player = keyArray[summed.indexOf(valMin)]; 
 		console.log('player '+player,'index ' + summed.indexOf(valMin) ); 
 		var output = '<img src="images/' + player + '.png" id="blzpics" alt="not found" />'; 
